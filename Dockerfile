@@ -1,6 +1,15 @@
 # Use the official ERPNext image as the base (using latest v15)
 FROM frappe/erpnext:v15
 
+# Install build dependencies as root
+USER root
+RUN apt-get update && apt-get install -y \
+    pkg-config \
+    default-libmysqlclient-dev \
+    gcc \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Switch to the frappe user
 USER frappe
 
@@ -13,7 +22,7 @@ RUN rm -rf apps/erpnext
 # Install custom apps from Git repositories
 RUN bench get-app golbazaar https://github.com/abhiknack/golbazaar.git
 RUN bench get-app --branch my-fixed-branch erpnext https://github.com/abhiknack/golerpnext.git
-RUN bench get-app insights https://github.com/frappe/insights.git
+RUN bench get-app --branch v3.2.11 insights https://github.com/frappe/insights.git
 
 # Update apps.txt to reflect installed apps
 RUN ls -1 apps > sites/apps.txt
