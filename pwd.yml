@@ -77,7 +77,7 @@ services:
           fi
         done;
         echo "sites/common_site_config.json found";
-        bench new-site --mariadb-user-host-login-scope='%' --admin-password=${ADMIN_PASSWORD} --db-root-username=root --db-root-password=${DB_ROOT_PASSWORD} --install-app erpnext --install-app golbazaar --install-app insights --set-default ${SITE_NAME};
+        bench new-site --mariadb-user-host-login-scope='%' --admin-password=${ADMIN_PASSWORD} --db-root-username=root --db-root-password=${DB_ROOT_PASSWORD} --install-app erpnext --install-app golbazaar --set-default ${SITE_NAME};
         bench --site ${SITE_NAME} migrate;
 
   db:
