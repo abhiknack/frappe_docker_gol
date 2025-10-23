@@ -22,10 +22,13 @@ RUN rm -rf apps/erpnext
 # Install custom apps from Git repositories
 RUN bench get-app golbazaar https://github.com/abhiknack/golbazaar.git
 RUN bench get-app --branch my-fixed-branch erpnext https://github.com/abhiknack/golerpnext.git
-# Skip insights for now - has complex build dependencies
-# You can install it later after the site is running with:
-# docker-compose -f pwd.yml exec backend bench get-app insights
-# docker-compose -f pwd.yml exec backend bench --site <sitename> install-app insights
+USER root
+RUN /home/frappe/frappe-bench/env/bin/pip install mysqlclient
+USER frappe
+RUN bench get-app insights https://github.com/frappe/insights.git
+# Skip insights - it has complex build dependencies
+# You can install it later manually with: bench get-app insights
+# RUN bench get-app insights https://github.com/frappe/insights.git
 
 # Update apps.txt to reflect installed apps
 RUN ls -1 apps > sites/apps.txt
