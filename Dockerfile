@@ -22,7 +22,7 @@ RUN rm -rf apps/erpnext
 # Install custom apps from Git repositories
 RUN bench get-app golbazaar https://github.com/abhiknack/golbazaar.git
 RUN bench get-app --branch my-fixed-branch erpnext https://github.com/abhiknack/golerpnext.git
-RUN bench get-app --branch v3.2.11 insights https://github.com/frappe/insights.git
+RUN bench get-app --branch  insights https://github.com/frappe/insights.git
 
 # Update apps.txt to reflect installed apps
 RUN ls -1 apps > sites/apps.txt
